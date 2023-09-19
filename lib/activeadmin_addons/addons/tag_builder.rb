@@ -1,8 +1,13 @@
 module ActiveAdminAddons
   class TagBuilder < CustomBuilder
     def render
-      raise "you need to pass an enum attribute" unless rails_enum_attr?
+      @enum_attr = if enumerize_attr?
+                     :enumerize
+                   elsif rails_enum_attr?
+                     :enum
+                   end
 
+      raise "you need to pass an enumerize or enum attribute" unless @enum_attr
       append_tag
     end
 
@@ -31,7 +36,11 @@ module ActiveAdminAddons
     end
 
     def display_data
-      EnumUtils.translate_enum_option(model.class, attribute.to_s, data)
+      if @enum_attr == :enumerize
+        data.text
+      else
+        EnumUtils.translate_enum_option(model.class, attribute.to_s, data)
+      end
     end
 
     def interactive_params(klass)
@@ -63,7 +72,17 @@ module ActiveAdminAddons
 
     def possible_values
       klass = model.class
-      EnumUtils.options_for_select(klass, attribute.to_s)
+      if @enum_attr == :enumerize
+        klass.enumerized_attributes[attribute.to_s].values.map { |value| [value.capitalize, value] }
+      else
+        EnumUtils.options_for_select(klass, attribute.to_s)
+      end
+    end
+
+    def enumerize_attr?
+      data.is_a?("Enumerize::Value".constantize)
+    rescue NameError
+      false
     end
 
     def rails_enum_attr?

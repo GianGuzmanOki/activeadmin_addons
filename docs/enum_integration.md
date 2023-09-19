@@ -22,10 +22,14 @@ end
 
 <img src="./images/enumerize-tag-column.png" height="250" />
 
-If you want to customize the tag's colors. You need to define css classes matching enum values. For example: if you have the `Bill` model with:
+If you want to customize the tag's colors. You need to define css classes matching enumerize attribute values. For example: if you have the `Bill` model with:
 
 ```ruby
 class Bill < ActiveRecord::Base
+  # Enumerize
+  extend Enumerize
+  enumerize :state, in: [:pending, :rejected, :approved], default: :pending
+
   # Rails Enum
   enum status: { active: 0, archived: 1 }
 end
@@ -47,7 +51,7 @@ $approved-color: #08A510;
 
 ## Interactive Tag Column
 
-`tag_column` also can receive the boolean parameter `interactive`. If `interactive` is true, it will render a slim select input to change the value of the attribute when the tag is clicked:
+`tag_column` also can receive the boolean parameter `interactive`. If `interactive` is true, it will render a select2 input to change the value of the attribute when the tag is clicked:
 
 ```ruby
 index do

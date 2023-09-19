@@ -1,13 +1,10 @@
-const loadEvents = ['turbo:load', 'turbolinks:load', 'DOMContentLoaded'];
-
-function initializer() {
+var initializer = function() {
   window.ActiveadminAddons = {
     config: {
-      defaultSelect: document.querySelector('body').dataset.defaultSelect,
+      defaultSelect: $('body').data('default-select'),
     },
   };
-}
+};
 
-loadEvents.forEach((event) => {
-  document.addEventListener(event, initializer);
-});
+$(initializer);
+$(document).on('turbolinks:load turbo:load', initializer);

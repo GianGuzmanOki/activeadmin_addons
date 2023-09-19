@@ -1,10 +1,6 @@
 class ActiveAdmin::Inputs::SelectInput < Formtastic::Inputs::SelectInput
   def input_html_options
-    if @options[:tags].present?
-      super.deep_merge(class: 'simple-tags-input')
-    else
-      super
-    end
+    super.merge(data: { tags: @options[:tags].present? })
   end
 
   def raw_collection

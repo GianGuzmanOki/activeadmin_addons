@@ -7,9 +7,10 @@ ActiveAdmin Addons will extend your ActiveAdmin and enable a set of addons you c
 
 #### Rows/Columns
 
-- [Shrine Image](#shrine-image): show thumbnails on your show/index views.
+- [Paperclip Attachment](#paperclip-attachment): show file icons on your show/index views.
+- [Paperclip Image](#paperclip-image): show thumbnails on your show/index views.
 - [AASM Integration](#aasm-integration): nice looking tags for states.
-- [Rails Enum Integration](#rails-enum-integration): nice looking tags for enums.
+- [Enumerize and Rails Enum Integration](#enumerize-and-rails-enum-integration): nice looking tags for enums.
 - [Boolean Values](#boolean-values): beautiful boolean values.
 - [Toggleable Booleans](#toggleable-boolean-columns): have switches to toggle values directly at the index
 - [Number Formatting](#number-formatting): format you currencies with ease.
@@ -33,6 +34,7 @@ ActiveAdmin Addons will extend your ActiveAdmin and enable a set of addons you c
 
 #### Themes
 - [No Theme](#no-theme): ActiveAdmin default style.
+- [Material Theme](#material-theme): Material Design style provide by [active_material](https://github.com/vigetlabs/active_material).
 
 ## Installation
 
@@ -61,6 +63,7 @@ Check [here](docs/install_generator.md) to see more information about this gener
 Installing this gem will enable the following changes by default:
 
 * The default date input will be `:datepicker` instead of `:date_select`
+* Filters and selects will offer integration with [enumerize](https://github.com/brainspec/enumerize)
 * Select filters will show translated values when used with Rails built-in `enums`
 * All select boxes will use select2
 
@@ -68,9 +71,17 @@ Installing this gem will enable the following changes by default:
 
 ### Rows/Columns
 
+#### Paperclip Attachment
+
+Displays a paperclip link with attachment related icon into index and show views.
+
+<img src="./docs/images/paperclip-attachment-column.png" height="250" />
+
+[Read more!](docs/paperclip_attachment.md)
+
 #### Images
 
-Display images in the index and show views. This implementation supports [Shrine](https://github.com/shrinerb/shrine).
+Display images in the index and show views. This implementation supports [Shrine](https://github.com/shrinerb/shrine) and [Paperclip](https://github.com/thoughtbot/paperclip).
 
 <img src="./docs/images/paperclip-image-column.png" height="380" />
 
@@ -84,9 +95,9 @@ You can show [aasm](https://github.com/aasm/aasm) values as active admin tags.
 
 [Read more!](docs/aasm_integration.md)
 
-#### Rails Enum Integration
+#### Enumerize and Rails Enum Integration
 
-You can show Rails' built in `enums` as active admin tags.
+You can show Rails' built in `enums` or [enumerize](https://github.com/brainspec/enumerize) values as active admin tags.
 
 <img src="./docs/images/enumerize-tag-column.png" height="250" />
 
@@ -134,45 +145,45 @@ You can render text as markdown.
 
 ### Inputs
 
-#### Slim Select Input
+#### Select2 Input
 
-With [Slim Select](https://slimselectjs.com/) the select control looks nicer, it works great with large collections.
+With [select2](http://ivaynberg.github.io/select2/) the select control looks nicer, it works great with large collections.
 
-<img src="./docs/images/slim-select.gif" />
+<img src="./docs/images/select2-default.gif" height="200" />
 
-[Read more!](docs/slim-select_default.md)
+[Read more!](docs/select2_default.md)
 
 #### Tag Input
 
-Using tags input, you can add tags using slim select.
+Using tags input, you can add tags using select2.
 
-<img src="./docs/images/slim-select-tags.gif" />
+<img src="./docs/images/select2-tags.gif" height="200" />
 
-[Read more!](docs/slim-select_tags.md)
+[Read more!](docs/select2_tags.md)
 
 #### Selected List Input
 
 This form control allows you to handle your many to many associations.
 
-<img src="./docs/images/slim-select-selected-list.gif" />
+<img src="./docs/images/select2-selected-list.gif" height="400" />
 
-[Read more!](docs/slim-select_selected_list.md)
+[Read more!](docs/select2_selected_list.md)
 
 #### Search Select Input
 
 Using `search_select` input, you can easily add ajax search to activeadmin.
 
-<img src="./docs/images/slim-select-search-select.gif" />
+<img src="./docs/images/select2-search-select.gif" height="180" />
 
-[Read more!](docs/slim-select_search.md)
+[Read more!](docs/select2_search.md)
 
 #### Nested Select Input
 
 Using `nested_select` input, you can build related select inputs.
 
-<img src="./docs/images/slim-select-nested-select.gif" />
+<img src="./docs/images/select2-nested-select-default.gif" height="230" />
 
-[Read more!](docs/slim-select_nested_select.md)
+[Read more!](docs/select2_nested_select.md)
 
 ### Color Picker Input
 
@@ -234,6 +245,28 @@ filter :category_id, as: :search_select_filter
 
 #### NO Theme
 Use default active_admin theme.
+
+#### Material Theme
+##### Not compatible when Active Admin has been installed in webpack mode
+
+Show material design theme using [active_material](https://github.com/vigetlabs/active_material). If you want to use it, you should run the generator using the flag `theme` as follow:
+
+```ruby
+rails g activeadmin_addons:install --theme material
+```
+
+Also, you can modify primary color, and all other theme colors, in the first lines of the file: ` app/assets/stylesheets/active_admin.scss`
+```scss
+$am-theme-primary: YOUR-COLOR;
+...
+other colors
+...
+@import 'activeadmin_addons/material';
+```
+
+Take care of defining these variables before the import of `@import 'activeadmin_addons/material';`.
+
+For material documentation you should go to [gem documentation](http://code.viget.com/active_material/docs/api/).
 
 ## Publishing
 
