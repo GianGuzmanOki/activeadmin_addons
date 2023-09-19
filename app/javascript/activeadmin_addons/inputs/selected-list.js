@@ -37,6 +37,7 @@ var initializer = function() {
           data: function(params) {
             var textQuery = { m: 'or' };
             fields.forEach(function(field) {
+              console.log('field', field);
               if (field == 'id') {
                 textQuery[field + '_eq'] = params.term;
               } else {
